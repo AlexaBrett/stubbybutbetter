@@ -1,0 +1,89 @@
+{
+  "name": "stubbybb",
+  "version": "5.1.0",
+  "description": "a lightweight server for stubbing external systems and endpoints",
+  "keywords": [
+    "server",
+    "stub",
+    "mock",
+    "testing",
+    "service",
+    "endpoint",
+    "http",
+    "https",
+    "api",
+    "rest"
+  ],
+  "directories": {
+    "bin": "./bin",
+    "lib": "./src",
+    "man": "./man"
+  },
+  "files": [
+    "bin",
+    "man",
+    "src",
+    "tls",
+    "webroot"
+  ],
+  "scripts": {
+    "lint": "semistandard",
+    "test": "npm run lint && mocha --recursive test --reporter dot",
+    "start": "bin/stubby",
+    "ui:build": "vite build --config ui/admin-debug/vite.config.ts",
+    "ui:dev": "vite --config ui/admin-debug/vite.config.ts"
+  },
+  "bin": {
+    "stubby": "bin/stubby"
+  },
+  "main": "src/main.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mrak/stubby4node.git"
+  },
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "isutf8": "^3.1.1",
+    "js-yaml": "^4.0.0",
+    "node-static": "^0.7.11",
+    "yaml": "^2.4.5"
+  },
+  "devDependencies": {
+    "@radix-ui/react-accordion": "^1.1.2",
+    "@radix-ui/react-select": "^2.0.0",
+    "@tailwindcss/postcss": "^4.1.13",
+    "@tailwindcss/vite": "^4.1.13",
+    "@types/react": "^18.2.56",
+    "@types/react-dom": "^18.2.19",
+    "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.21",
+    "clsx": "^2.1.1",
+    "mocha": "^8.3.1",
+    "postcss": "^8.5.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "semistandard": "^16.0.0",
+    "sinon": "^10.0.0",
+    "tailwindcss": "^4.1.13",
+    "tailwindcss-animate": "^1.0.7",
+    "typescript": "^5.4.5",
+    "vite": "^5.1.0"
+  },
+  "license": "Apache-2.0",
+  "engine": {
+    "node": ">=6.17.1"
+  },
+  "semistandard": {
+    "ignore": [
+      "webroot/js/external",
+      "webroot/ui",
+      "ui/admin-debug"
+    ],
+    "globals": [
+      "it",
+      "describe",
+      "beforeEach",
+      "afterEach"
+    ]
+  }
+}

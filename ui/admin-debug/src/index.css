@@ -1,0 +1,23 @@
+
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+}
+
+body { @apply bg-neutral-900 text-neutral-100 antialiased; }
+
+.table { @apply w-full border-collapse; }
+.table th { @apply text-left bg-neutral-800 text-sky-400 px-2 py-1 border border-neutral-700; }
+.table td { @apply px-2 py-1 border border-neutral-800; }
+
+.badge { @apply inline-block px-2 py-0.5 rounded text-xs; }
+.badge-ok { @apply bg-emerald-600 text-white; }
+.badge-fail { @apply bg-red-700 text-white; }
+
+.btn { @apply px-3 py-1 rounded bg-neutral-800 border border-neutral-700 hover:bg-neutral-700; }
+.btn-primary { @apply bg-sky-800 border-sky-700 hover:bg-sky-700; }
+
+.card { @apply border border-neutral-800 rounded; }
+.card-header { @apply bg-neutral-800 px-3 py-2 font-semibold; }
+.card-body { @apply p-3; }

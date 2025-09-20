@@ -1,0 +1,80 @@
+.TH STUBBY "1" "2015" "" ""
+
+
+.SH "NAME"
+stubby \- a small web server for stubbing external systems during development.
+
+.SH SYNOPSIS
+
+.B stubby
+[
+.B \-w
+|
+.B \-\-watch
+]
+[
+.B \-d
+|
+.B \-\-data
+.I file
+]
+.br
+       [
+.B \-v
+|
+.B \-\-version
+]
+.br
+       [
+.B \-h
+||
+.B \-\-help
+]
+[
+.B \-u
+|
+.B \-\-ui
+]
+[
+.B \-H
+|
+.B \-\-case-sensitive-headers
+]
+
+.SH DESCRIPTION
+stubby can be invoked either programmatically or through the command line.
+Each invocation starts a new instance, given that the supplied port numbers do not overlap.
+By default, two servers are started: one for serving configured stubs over HTTP, and a second over HTTPS.
+When the \-u or \-\-ui flag is provided, an additional admin portal is started. The admin portal exposes a status page and a tracing UI for inspecting recent request matches, and provides a REST API for managing endpoints.
+
+.SH OPTIONS
+\-a, \-\-admin <port>         Port for admin portal. Defaults to 8889.
+
+\-c, \-\-cert <file>          Certificate file. Use with \-\-key.
+
+\-d, \-\-data <file>          Data file to pre-load endpoints. YAML or JSON format.
+
+\-h, \-\-help                 This help text.
+
+\-k, \-\-key <file>           Private key file. Use with \-\-cert.
+
+\-l, \-\-location <hostname>  Hostname at which to bind stubby.
+
+\-p, \-\-pfx <file>           PFX file. Ignored if used with \-\-key/\-\-cert.
+
+\-q, \-\-quiet                Prevent stubby from printing to the console.
+
+\-s, \-\-stubs <port>         Port for stubs portal. Defaults to 8882.
+
+\-t, \-\-tls <port>           Port for https stubs portal. Defaults to 7443.
+
+\-u, \-\-ui                   Enable tracing harness and admin UI (starts admin portal).
+
+\-v, \-\-version              Prints stubby's version number.
+
+\-w, \-\-watch                Auto-reload data file when edits are made.
+
+\-H, \-\-case-sensitive-headers   Do not normalize response headers to lower-case.
+
+.SH RESOURCES AND DOCUMENTATION
+github:  http://github.com/mrak/stubby4node

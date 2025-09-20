@@ -1,0 +1,27 @@
+#!/usr/bin/env node
+
+const CLI = require('../src/console/cli');
+const { Stubby } = require('../src/main');
+
+(function () {
+  const options = CLI.getArgs();
+  const stubby = new Stubby();
+
+  function logError(prefix, e) {
+    var msg = (e && e.message) ? e.message : String(e);
+    console.error(prefix + ' ' + msg);
+  }
+
+  Promise.resolve()
+    .then(function () { return stubby.start(options); })
+    .catch(function (e) {
+      logError('Stubby failed to start:', e);
+      process.exit(1);
+    });
+
+  process.on('SIGHUP', function () {
+    stubby.stop()
+      .then(function () { return stubby.start(options); })
+      .catch(function (e) { logError('Stubby reload failed:', e); });
+  });
+})();
