@@ -89,6 +89,15 @@ describe('End 2 End Stubs Test Suite', function () {
       });
     });
 
+    it('should reject admin paths on stubs port', function (done) {
+      this.context.url = '/stubbybutbetter/status/index.html';
+      this.context.method = 'get';
+      createRequest(this.context, function (response) {
+        assert.strictEqual(response.statusCode, 404);
+        done();
+      });
+    });
+
     it('should return a response for an endpoint with multiple methods', function (done) {
       const self = this;
       this.context.url = '/basic/all';
@@ -119,7 +128,7 @@ describe('End 2 End Stubs Test Suite', function () {
 
               self.context.port = 8889;
               self.context.finished = false;
-              self.context.url = '/7';
+              self.context.url = '/stubbybutbetter/7';
               self.context.method = 'get';
 
               createRequest(self.context, function (response5) {

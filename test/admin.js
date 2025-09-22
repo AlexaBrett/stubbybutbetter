@@ -36,8 +36,8 @@ describe('Admin', function () {
   });
 
   describe('urlValid', function () {
-    it('should accept the root url', function () {
-      const url = '/';
+    it('should accept the admin root url', function () {
+      const url = '/stubbybutbetter';
       const result = sut.urlValid(url);
 
       assert(result);
@@ -51,7 +51,7 @@ describe('Admin', function () {
     });
 
     it('should accept urls of digits', function () {
-      const url = '/1';
+      const url = '/stubbybutbetter/1';
       const result = sut.urlValid(url);
 
       assert(result);
@@ -75,7 +75,7 @@ describe('Admin', function () {
   describe('getId', function () {
     it('should get valid id from url', function () {
       const id = '123';
-      const url = '/' + id;
+      const url = '/stubbybutbetter/' + id;
       const actual = sut.getId(url);
 
       assert.strictEqual(actual, id);

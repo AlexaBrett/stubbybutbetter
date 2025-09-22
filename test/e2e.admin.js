@@ -43,7 +43,7 @@ describe('End 2 End Admin Test Suite', function () {
     const id = 3;
     const endpoint = clone(endpointData[id - 1]);
     endpoint.id = id;
-    this.context.url = '/' + id;
+    this.context.url = '/stubbybutbetter/' + id;
     this.context.method = 'get';
 
     createRequest(this.context, function (response) {
@@ -66,7 +66,7 @@ describe('End 2 End Admin Test Suite', function () {
     const self = this;
     const id = 2;
     const endpoint = clone(endpointData[id - 1]);
-    this.context.url = '/' + id;
+    this.context.url = '/stubbybutbetter/' + id;
     endpoint.request.url = '/munchkin';
     this.context.method = 'put';
     this.context.post = JSON.stringify(endpoint);
@@ -86,6 +86,49 @@ describe('End 2 End Admin Test Suite', function () {
     });
   });
 
+  it('should return traces when UI is enabled', function (done) {
+    const self = this;
+    // First: hit the stubs server to generate a trace
+    const stubCtx = { port: 8882, url: '/basic/get', method: 'get', done: false };
+    createRequest(stubCtx, function () {
+      // Then: query the admin tracing endpoint
+      self.context.url = '/stubbybutbetter/match-traces?limit=10';
+      self.context.method = 'get';
+      createRequest(self.context, function (response) {
+        const items = JSON.parse(response.data || '[]');
+        assert(Array.isArray(items));
+        assert(items.length >= 1);
+        // sanity check minimal shape
+        assert(items[0].request && items[0].response);
+        done();
+      });
+    });
+  });
+
+  it('should clear traces', function (done) {
+    const self = this;
+    // Ensure there is at least one trace
+    const stubCtx = { port: 8882, url: '/basic/get', method: 'get', done: false };
+    createRequest(stubCtx, function () {
+      // Clear via admin
+      self.context.url = '/stubbybutbetter/match-traces/clear';
+      self.context.method = 'post';
+      createRequest(self.context, function (response) {
+        assert.strictEqual(response.statusCode, 204);
+        // Verify empty
+        self.context.method = 'get';
+        self.context.url = '/stubbybutbetter/match-traces?limit=10';
+        createRequest(self.context, function (response2) {
+          const items = JSON.parse(response2.data || '[]');
+          assert(Array.isArray(items));
+          // After clear, ring may still contain earlier items if not reinitialized; our API clears ring
+          assert(items.length === 0);
+          done();
+        });
+      });
+    });
+  });
+
   it('should be about to create an endpoint through POST', function (done) {
     const self = this;
     const endpoint = {
@@ -96,7 +139,7 @@ describe('End 2 End Admin Test Suite', function () {
         status: 200
       }
     };
-    this.context.url = '/';
+    this.context.url = '/stubbybutbetter';
     this.context.method = 'post';
     this.context.post = JSON.stringify(endpoint);
 
@@ -108,7 +151,7 @@ describe('End 2 End Admin Test Suite', function () {
       self.context = {
         port: port,
         done: false,
-        url: '/' + id,
+        url: '/stubbybutbetter/' + id,
         method: 'get'
       };
 
@@ -123,7 +166,7 @@ describe('End 2 End Admin Test Suite', function () {
 
   it('should be about to delete an endpoint through DELETE', function (done) {
     const self = this;
-    this.context.url = '/2';
+    this.context.url = '/stubbybutbetter/2';
     this.context.method = 'delete';
 
     createRequest(this.context, function (response) {
@@ -132,7 +175,7 @@ describe('End 2 End Admin Test Suite', function () {
       self.context = {
         port: port,
         done: false,
-        url: '/2',
+        url: '/stubbybutbetter/2',
         method: 'get'
       };
 

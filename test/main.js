@@ -141,5 +141,17 @@ describe('main', function () {
         assert.strictEqual(options.cert, defaults.cert);
       });
     });
+
+    describe('ui gating', function () {
+      it('should NOT start admin portal when ui is false', async () => {
+        await sut.start({});
+        assert(!sut.adminPortal);
+      });
+
+      it('should start admin portal when ui is true', async () => {
+        await sut.start({ ui: true });
+        assert(sut.adminPortal && sut.adminPortal.address());
+      });
+    });
   });
 });

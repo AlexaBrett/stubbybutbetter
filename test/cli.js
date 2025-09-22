@@ -282,6 +282,7 @@ describe('CLI', function () {
         pfx: 'a pfx',
         tls: '443',
         quiet: true,
+        ui: false,
         watch: filename,
         datadir: process.cwd(),
         'case-sensitive-headers': true,
